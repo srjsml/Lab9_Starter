@@ -186,11 +186,11 @@
 
     // Console trace button
     errorBtns[13].addEventListener('click', () => {
-      const first = () => { second(); };
-      const second = () => { third(); };
-      const third = () => { fourth(); };
-      const fourth = () => { console.trace(); };
-      first();
+      const fourth = () => { third(); };
+      const third = () => { second(); };
+      const second = () => { first(); };
+      const first = () => { console.trace(); };
+      fourth();
     });
 
     // Custom global error
