@@ -86,7 +86,14 @@
       <button>Trigger a Global Error</button>
     </section>
   </main>
-
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "c047cc5d155e48aa93ab5afac48d6f2d"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
+                        
   <script>
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
@@ -102,7 +109,122 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
+    // console.log(errorBtns);
+
+    TrackJS.track('Testing TrackJS!');
+
+    // Console Log button
+    errorBtns[0].addEventListener('click', () => {
+      console.log('console log');
+    });
+
+    // Console Error button
+    errorBtns[1].addEventListener('click', () => {
+      console.error('you have an error in your program');
+    });
+
+    // Console count button
+    errorBtns[2].addEventListener('click', () => {
+      console.count('woah kenny error');
+    });
+
+    // Console warn button
+    errorBtns[3].addEventListener('click', () => {
+      console.warn('Your software is out of date!');
+    });
+
+    // Console assert button
+    errorBtns[4].addEventListener('click', () => {
+      const x = 33;
+      const y = 3;
+      const r = 'x should be greater than y'
+      console.assert(x < y, {x, y, r});
+      // console.assert(y < x, {x, y, r});
+    });
+
+    // Console clear button
+    errorBtns[5].addEventListener('click', () => {
+      console.clear();
+    });
+
+    // Console dir button
+    errorBtns[6].addEventListener('click', () => {
+      console.dir(document.head);
+    });
+
+    // Console dirxml button
+    errorBtns[7].addEventListener('click', () => {
+      console.dirxml(document);
+    });
+
+    // Console group start button
+    errorBtns[8].addEventListener('click', () => {
+      console.group('Bunch of Errors');
+      console.log('These are the errors within the group, "Bunch of Errors"');
+    });
+
+    // Console group end button
+    errorBtns[9].addEventListener('click', () => {
+      console.groupEnd();
+      console.log('The group for "Bunch of Errors" is closing');
+    });
+
+    // Console table button
+    errorBtns[10].addEventListener('click', () => {
+      console.table([ {first: 'Seeraj', last: 'Somla'}, {first: 'Dan', last: 'Parfait'}, {first: 'Oliver', last:'Tree'}]);
+    });
+
+    // Start timer button
+    errorBtns[11].addEventListener('click', () => {
+      console.time('Timer');
+    });
+
+    // End timer button
+    errorBtns[12].addEventListener('click', () => {
+      console.timeEnd('Timer');
+    });
+
+    // Console trace button
+    errorBtns[13].addEventListener('click', () => {
+      const first = () => { second(); };
+      const second = () => { third(); };
+      const third = () => { fourth(); };
+      const fourth = () => { console.trace(); };
+      first();
+    });
+
+    // Custom global error
+    class newGlobalError extends Error {
+      constructor(error) {
+        super(error);
+        this.name = "newGlobalError";
+      }
+    }
+
+    // Trigger a global event button
+    errorBtns[14].addEventListener('click', () => {
+      try {
+        throw error;
+      } catch(err) {
+        console.log('This error broke the program! Fix it.');
+      } finally {
+        alert('Throwing a Global Error!');
+        throw new newGlobalError('Global Error is being thrown');
+      }
+    });
+
+    // Function to call in window event listener when global error is triggered
+    function callGlobalError(message) {
+      alert(message);
+    }
+
+    // Event listener
+    window.addEventListener('error', () => {
+      console.log("Listening for Global Error...");
+      callGlobalError("You have caused a Global Error. Press 'OK' to continue.");
+    })
   </script>
+                          
 </body>
 
 </html>
